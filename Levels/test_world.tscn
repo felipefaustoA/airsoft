@@ -1,0 +1,106 @@
+[gd_scene load_steps=16 format=3 uid="uid://h3vhtxqgu6f0"]
+
+[ext_resource type="PackedScene" uid="uid://d11fdb1p7m30u" path="res://Player/player.tscn" id="2_50dj4"]
+[ext_resource type="Texture2D" uid="uid://cob20pm420c7d" path="res://Textures/Orange/texture_09.png" id="2_of68j"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_50dj4"]
+sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+ground_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+
+[sub_resource type="Sky" id="Sky_of68j"]
+sky_material = SubResource("ProceduralSkyMaterial_50dj4")
+
+[sub_resource type="Environment" id="Environment_mggor"]
+background_mode = 2
+sky = SubResource("Sky_of68j")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_s7fsy"]
+size = Vector3(8, 0, 50)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_mggor"]
+load_path = "res://.godot/imported/texture_08.png-66861350fd02bb079097d870a0afb9b3.s3tc.ctex"
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1ot53"]
+albedo_texture = SubResource("CompressedTexture2D_mggor")
+uv1_scale = Vector3(0.25, 0.25, 0.25)
+uv1_triplanar = true
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_of68j"]
+material = SubResource("StandardMaterial3D_1ot53")
+size = Vector2(8, 50)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_m5bqa"]
+size = Vector3(4, 0, 50)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1r5jd"]
+albedo_texture = ExtResource("2_of68j")
+uv1_scale = Vector3(0.25, 0.25, 0.25)
+uv1_triplanar = true
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_jykfp"]
+material = SubResource("StandardMaterial3D_1r5jd")
+size = Vector2(4, 50)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_50dj4"]
+size = Vector3(8, 0, 4)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_of68j"]
+albedo_texture = ExtResource("2_of68j")
+uv1_scale = Vector3(0.25, 0.25, 0.25)
+uv1_triplanar = true
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_mggor"]
+material = SubResource("StandardMaterial3D_of68j")
+size = Vector2(8, 4)
+
+[node name="TestWorld" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_mggor")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
+shadow_enabled = true
+
+[node name="Ground" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
+shape = SubResource("BoxShape3D_s7fsy")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
+mesh = SubResource("PlaneMesh_of68j")
+skeleton = NodePath("../..")
+
+[node name="WallRight" type="StaticBody3D" parent="."]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 4, 2, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="WallRight"]
+shape = SubResource("BoxShape3D_m5bqa")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="WallRight"]
+mesh = SubResource("PlaneMesh_jykfp")
+
+[node name="WallLeft" type="StaticBody3D" parent="."]
+transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, -2, 2, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="WallLeft"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2, 0)
+shape = SubResource("BoxShape3D_m5bqa")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="WallLeft"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2, 0)
+mesh = SubResource("PlaneMesh_jykfp")
+
+[node name="WallBack" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 2, 25)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="WallBack"]
+shape = SubResource("BoxShape3D_50dj4")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="WallBack"]
+mesh = SubResource("PlaneMesh_mggor")
+
+[node name="Player" parent="." instance=ExtResource("2_50dj4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.03236, 23)
