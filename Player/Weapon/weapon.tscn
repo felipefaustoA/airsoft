@@ -1,0 +1,21 @@
+[gd_scene load_steps=5 format=3 uid="uid://3egpx7nhf1uv"]
+
+[ext_resource type="Script" uid="uid://dboucrpswt8ji" path="res://Player/Weapon/weapon.gd" id="1_qtusj"]
+[ext_resource type="PackedScene" uid="uid://dksg6jw1ggvmn" path="res://Player/Weapon/bb.tscn" id="2_tj4no"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vguwy"]
+albedo_color = Color(0, 0, 1, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_vguwy"]
+material = SubResource("StandardMaterial3D_vguwy")
+size = Vector3(0.05, 0.267, 0.87)
+
+[node name="Weapon" type="Node3D"]
+script = ExtResource("1_qtusj")
+bb_scene = ExtResource("2_tj4no")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_vguwy")
+
+[node name="Muzzle" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0727033, -0.449538)
