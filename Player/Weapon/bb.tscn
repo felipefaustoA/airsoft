@@ -1,0 +1,25 @@
+[gd_scene load_steps=5 format=3 uid="uid://dksg6jw1ggvmn"]
+
+[ext_resource type="Script" uid="uid://dfufjxgwelmhw" path="res://Player/Weapon/bb.gd" id="1_wiljp"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_b801o"]
+radius = 0.003
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wiljp"]
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_6ebou"]
+material = SubResource("StandardMaterial3D_wiljp")
+radius = 0.1
+height = 0.2
+
+[node name="BB" type="RigidBody3D"]
+mass = 0.001
+continuous_cd = true
+script = ExtResource("1_wiljp")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_b801o")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_6ebou")
