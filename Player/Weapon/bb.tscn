@@ -1,6 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://dksg6jw1ggvmn"]
+[gd_scene load_steps=7 format=3 uid="uid://dksg6jw1ggvmn"]
 
 [ext_resource type="Script" uid="uid://dfufjxgwelmhw" path="res://Player/Weapon/bb.gd" id="1_wiljp"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_7tv4u"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_b801o"]
 radius = 0.003
@@ -13,8 +15,12 @@ material = SubResource("StandardMaterial3D_wiljp")
 radius = 0.1
 height = 0.2
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7tv4u"]
+albedo_color = Color(0.909804, 0, 0, 1)
+
 [node name="BB" type="RigidBody3D"]
 mass = 0.001
+physics_material_override = SubResource("PhysicsMaterial_7tv4u")
 continuous_cd = true
 script = ExtResource("1_wiljp")
 
@@ -23,3 +29,7 @@ shape = SubResource("SphereShape3D_b801o")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("SphereMesh_6ebou")
+
+[node name="TrailEmitter" type="TrailEmitter" parent="."]
+material = SubResource("StandardMaterial3D_7tv4u")
+size = 0.2

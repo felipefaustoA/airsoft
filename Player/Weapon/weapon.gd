@@ -1,21 +1,33 @@
 extends Node3D
 
 @export var bb_scene: PackedScene
-var energy = 1.49 
-var mass = 0.00020
+const METERS_TO_FEET = 3.28084
 
-func _input(event):
+var has_drag : bool = true
+
+func _input(event: InputEvent):
 	if event.is_action_pressed("shoot"):
 		shoot()
+		
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed("change_drag"):
+		has_drag = !has_drag
+		print(has_drag)
 
 func shoot():
 	var bb = bb_scene.instantiate()
 	get_tree().root.add_child(bb)
 	
+	bb.has_drag = has_drag
+	
 	bb.global_transform.origin = $Muzzle.global_transform.origin
 	
-	var v = sqrt(2 * energy / mass)
+	var v_mps = sqrt(2 * bb.energy / bb.bb_mass)
 	
-	var dir = -global_transform.basis.z.normalized()
+	var v_fps = v_mps * METERS_TO_FEET
 	
-	bb.linear_velocity = dir * v
+	print("Velocidade do projétil: ", v_fps, " pés/segundo (ft/s)")
+	
+	bb.dir = -$Muzzle.global_transform.basis.z.normalized()
+	
+	bb.linear_velocity = bb.dir * v_mps
